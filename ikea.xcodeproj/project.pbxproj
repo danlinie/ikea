@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,10 +15,18 @@
 		600B3CA5248EF74100CEB217 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 600B3CA3248EF74100CEB217 /* LaunchScreen.storyboard */; };
 		600B3CAD248F849C00CEB217 /* itemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600B3CAC248F849C00CEB217 /* itemCell.swift */; };
 		600B3CAF248F9FA800CEB217 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 600B3CAE248F9FA800CEB217 /* Assets */; };
+		60630F5724CAF28E0034385D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 60630F5524CAF28D0034385D /* MBProgressHUD.m */; };
+		60630F5924CB10E80034385D /* Loading3DModelsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60630F5824CB10E80034385D /* Loading3DModelsController.swift */; };
+		60630F5B24CB2B500034385D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 60630F5A24CB2B4F0034385D /* GoogleService-Info.plist */; };
+		60630F5D24CB5B2E0034385D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60630F5C24CB5B2E0034385D /* ContentView.swift */; };
+		60630F6124CB6B210034385D /* SwiftUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60630F6024CB6B210034385D /* SwiftUIViewController.swift */; };
+		60630F6324CCDE080034385D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60630F6224CCDE080034385D /* HomeViewController.swift */; };
 		60CC7AB524A9D85B0058B200 /* MeasurementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CC7AB424A9D85B0058B200 /* MeasurementViewController.swift */; };
+		C3E106B0EEF458C454A2BC14 /* Pods_ikea.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 808A5EC13EB197485330560B /* Pods_ikea.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		286033F19D021407A5AEE005 /* Pods-ikea.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ikea.debug.xcconfig"; path = "Target Support Files/Pods-ikea/Pods-ikea.debug.xcconfig"; sourceTree = "<group>"; };
 		600B3C95248EF73E00CEB217 /* ikea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ikea.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		600B3C98248EF73E00CEB217 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		600B3C9A248EF73E00CEB217 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -29,7 +37,17 @@
 		600B3CA6248EF74100CEB217 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		600B3CAC248F849C00CEB217 /* itemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = itemCell.swift; sourceTree = "<group>"; };
 		600B3CAE248F9FA800CEB217 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Assets; sourceTree = "<group>"; };
+		60630F5424CAF2880034385D /* ikea-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ikea-Bridging-Header.h"; sourceTree = "<group>"; };
+		60630F5524CAF28D0034385D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		60630F5624CAF28E0034385D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		60630F5824CB10E80034385D /* Loading3DModelsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loading3DModelsController.swift; sourceTree = "<group>"; };
+		60630F5A24CB2B4F0034385D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		60630F5C24CB5B2E0034385D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		60630F6024CB6B210034385D /* SwiftUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIViewController.swift; sourceTree = "<group>"; };
+		60630F6224CCDE080034385D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		60CC7AB424A9D85B0058B200 /* MeasurementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementViewController.swift; sourceTree = "<group>"; };
+		808A5EC13EB197485330560B /* Pods_ikea.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ikea.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA8C1EA61C3213E94CB74138 /* Pods-ikea.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ikea.release.xcconfig"; path = "Target Support Files/Pods-ikea/Pods-ikea.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3E106B0EEF458C454A2BC14 /* Pods_ikea.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,6 +67,8 @@
 			children = (
 				600B3C97248EF73E00CEB217 /* ikea */,
 				600B3C96248EF73E00CEB217 /* Products */,
+				84FF5A5A0B8AED782D283271 /* Pods */,
+				76B9709872F3730C2EECBE3E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +83,7 @@
 		600B3C97248EF73E00CEB217 /* ikea */ = {
 			isa = PBXGroup;
 			children = (
+				60630F5A24CB2B4F0034385D /* GoogleService-Info.plist */,
 				600B3CAE248F9FA800CEB217 /* Assets */,
 				600B3C98248EF73E00CEB217 /* AppDelegate.swift */,
 				600B3C9A248EF73E00CEB217 /* SceneDelegate.swift */,
@@ -69,8 +91,11 @@
 				60CC7AB224A9D7AF0058B200 /* Views */,
 				600B3CA1248EF74100CEB217 /* Assets.xcassets */,
 				600B3CA3248EF74100CEB217 /* LaunchScreen.storyboard */,
+				60630F5624CAF28E0034385D /* MBProgressHUD.h */,
+				60630F5524CAF28D0034385D /* MBProgressHUD.m */,
 				600B3CA6248EF74100CEB217 /* Info.plist */,
 				600B3CAC248F849C00CEB217 /* itemCell.swift */,
+				60630F5424CAF2880034385D /* ikea-Bridging-Header.h */,
 			);
 			path = ikea;
 			sourceTree = "<group>";
@@ -88,8 +113,29 @@
 			children = (
 				600B3C9C248EF73E00CEB217 /* ViewController.swift */,
 				60CC7AB424A9D85B0058B200 /* MeasurementViewController.swift */,
+				60630F5824CB10E80034385D /* Loading3DModelsController.swift */,
+				60630F5C24CB5B2E0034385D /* ContentView.swift */,
+				60630F6024CB6B210034385D /* SwiftUIViewController.swift */,
+				60630F6224CCDE080034385D /* HomeViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		76B9709872F3730C2EECBE3E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				808A5EC13EB197485330560B /* Pods_ikea.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		84FF5A5A0B8AED782D283271 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				286033F19D021407A5AEE005 /* Pods-ikea.debug.xcconfig */,
+				BA8C1EA61C3213E94CB74138 /* Pods-ikea.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -99,9 +145,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 600B3CA9248EF74100CEB217 /* Build configuration list for PBXNativeTarget "ikea" */;
 			buildPhases = (
+				7AF1FFE1BE5E5333CAF73B5A /* [CP] Check Pods Manifest.lock */,
 				600B3C91248EF73E00CEB217 /* Sources */,
 				600B3C92248EF73E00CEB217 /* Frameworks */,
 				600B3C93248EF73E00CEB217 /* Resources */,
+				B1F51470B66F146260F57CE8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -124,6 +172,7 @@
 				TargetAttributes = {
 					600B3C94248EF73E00CEB217 = {
 						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1150;
 					};
 				};
 			};
@@ -154,18 +203,66 @@
 				600B3CAF248F9FA800CEB217 /* Assets in Resources */,
 				600B3CA2248EF74100CEB217 /* Assets.xcassets in Resources */,
 				600B3CA0248EF73E00CEB217 /* Main.storyboard in Resources */,
+				60630F5B24CB2B500034385D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7AF1FFE1BE5E5333CAF73B5A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ikea-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B1F51470B66F146260F57CE8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ikea/Pods-ikea-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ikea/Pods-ikea-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ikea/Pods-ikea-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		600B3C91248EF73E00CEB217 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60630F5D24CB5B2E0034385D /* ContentView.swift in Sources */,
 				600B3CAD248F849C00CEB217 /* itemCell.swift in Sources */,
+				60630F5724CAF28E0034385D /* MBProgressHUD.m in Sources */,
+				60630F6124CB6B210034385D /* SwiftUIViewController.swift in Sources */,
 				60CC7AB524A9D85B0058B200 /* MeasurementViewController.swift in Sources */,
+				60630F6324CCDE080034385D /* HomeViewController.swift in Sources */,
+				60630F5924CB10E80034385D /* Loading3DModelsController.swift in Sources */,
 				600B3C9D248EF73E00CEB217 /* ViewController.swift in Sources */,
 				600B3C99248EF73E00CEB217 /* AppDelegate.swift in Sources */,
 				600B3C9B248EF73E00CEB217 /* SceneDelegate.swift in Sources */,
@@ -310,8 +407,10 @@
 		};
 		600B3CAA248EF74100CEB217 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 286033F19D021407A5AEE005 /* Pods-ikea.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 932FZ59CCD;
 				INFOPLIST_FILE = ikea/Info.plist;
@@ -321,6 +420,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.danlinwang.ikea;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ikea/ikea-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -328,8 +429,10 @@
 		};
 		600B3CAB248EF74100CEB217 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BA8C1EA61C3213E94CB74138 /* Pods-ikea.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 932FZ59CCD;
 				INFOPLIST_FILE = ikea/Info.plist;
@@ -339,6 +442,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.danlinwang.ikea;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ikea/ikea-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
