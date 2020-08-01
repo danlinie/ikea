@@ -66,7 +66,7 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <segue destination="uBV-ui-7DQ" kind="show" id="9RU-io-eCR"/>
+                                            <segue destination="LWW-Kv-VXk" kind="show" id="JUy-6Q-0dR"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -87,7 +87,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mOa-co-nfj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="39" y="100"/>
+            <point key="canvasLocation" x="37.600000000000001" y="99.400299850074973"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -160,7 +160,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1478" y="99"/>
+            <point key="canvasLocation" x="1164" y="99"/>
         </scene>
         <!--Loading 3D Models-->
         <scene sceneID="m3M-kl-xhk">
@@ -223,11 +223,7 @@
                         <viewLayoutGuide key="safeArea" id="NxT-u6-Bot"/>
                     </view>
                     <navigationItem key="navigationItem" id="ihw-uo-McX">
-                        <barButtonItem key="rightBarButtonItem" title="Add Model" id="Ui5-1L-S5A">
-                            <connections>
-                                <segue destination="LWW-Kv-VXk" kind="show" id="yoG-Xw-Nc0"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Model Catalogue" id="Ui5-1L-S5A"/>
                     </navigationItem>
                     <connections>
                         <outlet property="itemsCollectionView" destination="lH9-Ln-gIt" id="V1c-rV-FmF"/>
@@ -236,7 +232,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OWB-qq-EKL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="79" y="878"/>
+            <point key="canvasLocation" x="1506" y="869"/>
         </scene>
         <!--SwiftUI View Controller-->
         <scene sceneID="Giv-nT-YLf">
@@ -257,11 +253,17 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="14D-Vw-Xwb"/>
                     </view>
-                    <navigationItem key="navigationItem" id="3eZ-tj-lvo"/>
+                    <navigationItem key="navigationItem" id="3eZ-tj-lvo">
+                        <barButtonItem key="rightBarButtonItem" title="Render" id="2VQ-x8-MtS">
+                            <connections>
+                                <segue destination="uBV-ui-7DQ" kind="show" id="dfe-0D-Lq9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tsb-Y5-foe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1005" y="879"/>
+            <point key="canvasLocation" x="596" y="869"/>
         </scene>
         <!--Hosting Controller-->
         <scene sceneID="0Jb-uo-nUm">
@@ -269,7 +271,7 @@
                 <hostingController id="sDz-oG-6c0" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wO6-xl-bFV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1783" y="1169"/>
+            <point key="canvasLocation" x="595" y="1415"/>
         </scene>
         <!--Measurement View Controller-->
         <scene sceneID="0ce-2d-DIU">
@@ -327,7 +329,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z4r-cM-hM0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-887" y="878"/>
+            <point key="canvasLocation" x="-537" y="869"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DEo-XJ-y6l">

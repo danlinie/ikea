@@ -110,7 +110,7 @@ class Loading3DModelsController: UIViewController, ARSCNViewDelegate {
         self.hudDisplay = MBProgressHUD.showAdded(to:self.view, animated:true)
         self.hudDisplay.label.text = "Downloading model"
         
-        let reference = Storage.storage().reference().child("scene/cup.scn")
+        let reference = Storage.storage().reference().child("scene/cup")
         
         reference.getData(maxSize: 10 *  1024 * 1024) { (data, error) in
             if let error = error {
