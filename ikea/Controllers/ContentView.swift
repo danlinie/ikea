@@ -12,6 +12,8 @@ import MobileCoreServices
 
 struct ContentView: View {
     
+    //let db = Firestore.firestore()
+    
     @State var show = false
     @State var alert = false
     
@@ -73,14 +75,24 @@ struct DocumentPicker: UIViewControllerRepresentable {
         
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
             
+            let db = Firestore.firestore()
+            
             let bucket = Storage.storage().reference()
             
-            if let item = urls.first?.deletingPathExtension().lastPathComponent {
+            if let item = urls.first?.deletingPathExtension().lastPathComponent, let modelUploader = Auth.auth().currentUser?.email {
                 let storageReference = "scene/\(item)"
                 
+                db.collection(K.FBase.collectionName).addDocument(data: [K.FBase.nameField: item, K.FBase.uploaderField: modelUploader]) { (error) in
+                    if let e = error {
+                        print(e.localizedDescription)
+                    } else {
+                        print("Successfully saved data")
+                    }
+                }
+                
                 bucket.child(storageReference).putFile(from: urls.first!, metadata: nil) { (_, err) in
-                    if err != nil {
-                        print(err?.localizedDescription)
+                    if let e = err {
+                        print(e.localizedDescription)
                         return
                     }
                     

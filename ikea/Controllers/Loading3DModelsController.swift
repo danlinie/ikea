@@ -16,7 +16,7 @@ class Loading3DModelsController: UIViewController, ARSCNViewDelegate {
     var hudDisplay: MBProgressHUD!
     
     @IBOutlet weak var sceneView: ARSCNView!
-    @IBOutlet weak var itemsCollectionView: UICollectionView!
+    var modelName: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +25,10 @@ class Loading3DModelsController: UIViewController, ARSCNViewDelegate {
         sceneView.autoenablesDefaultLighting = true
         sceneView.delegate = self
         
-        downloadFiles()
-        
+        if modelName != nil {
+            print(modelName!)
+            downloadFiles(modelName: modelName!)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,22 +57,22 @@ class Loading3DModelsController: UIViewController, ARSCNViewDelegate {
             let results = sceneView.hitTest(touchLocation, types: .existingPlaneUsingExtent)
             
             if let hitResult = results.first {
-                addModel(atLocation: hitResult)
+                addModel(atLocation: hitResult, modelName:self.modelName!)
             }
         }
     }
     
-    func addModel(atLocation: ARHitTestResult) {
+    func addModel(atLocation: ARHitTestResult, modelName: String) {
         let documentDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         
         if let documentDirectory = documentDirectories.first {
             
-            let fileURL = documentDirectory.appendingPathComponent("cup.scn")
+            let fileURL = documentDirectory.appendingPathComponent("\(modelName).scn")
             
             do {
                 let scene = try SCNScene(url: fileURL, options: nil)
                 
-                if let node = scene.rootNode.childNode(withName: "cup", recursively: true) {
+                if let node = scene.rootNode.childNode(withName: modelName, recursively: true) {
                     node.position = SCNVector3(atLocation.worldTransform.columns.3.x, atLocation.worldTransform.columns.3.y, atLocation.worldTransform.columns.3.z)
                     self.sceneView.scene.rootNode.addChildNode(node)
                 }
@@ -85,32 +87,12 @@ class Loading3DModelsController: UIViewController, ARSCNViewDelegate {
         guard anchor is ARPlaneAnchor else {return}
     }
     
-    func getFiles() {
-        let reference = Storage.storage().reference().child("scene/")
-        
-        var itemsList = [String]()
-        reference.listAll { (result, error) in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            
-            let data = result.items
-            for item in data {
-                let string = item.name
-                let index = string.firstIndex(of: ".")!
-                let itemName = String(string[..<index])
-                
-                itemsList.append(string)
-            }
-        }
-    }
-    
-    func downloadFiles() {
+    func downloadFiles(modelName: String) {
         
         self.hudDisplay = MBProgressHUD.showAdded(to:self.view, animated:true)
         self.hudDisplay.label.text = "Downloading model"
         
-        let reference = Storage.storage().reference().child("scene/cup")
+        let reference = Storage.storage().reference().child("scene/\(modelName)")
         
         reference.getData(maxSize: 10 *  1024 * 1024) { (data, error) in
             if let error = error {
@@ -121,7 +103,7 @@ class Loading3DModelsController: UIViewController, ARSCNViewDelegate {
                 let documentDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
                 
                 if let documentDirectory = documentDirectories.first {
-                    let fileURL = documentDirectory.appendingPathComponent("cup.scn")
+                    let fileURL = documentDirectory.appendingPathComponent("\(modelName).scn")
                     
                     let dataNS: NSData? = data as NSData
                     

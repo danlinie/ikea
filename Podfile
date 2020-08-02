@@ -8,5 +8,8 @@ target 'ikea' do
   # Pods for ikea
 
   pod 'Firebase/Storage'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
+  pod 'PopupDialog', '~> 1.1.1'
 
 end
