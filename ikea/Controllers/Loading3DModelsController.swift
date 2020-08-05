@@ -16,21 +16,27 @@ class Loading3DModelsController: UIViewController, ARSCNViewDelegate {
     var hudDisplay: MBProgressHUD!
     
     @IBOutlet weak var sceneView: ARSCNView!
+    let configuration = ARWorldTrackingConfiguration()
+    
     var modelName: String?
+    var modelRef: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+        configuration.planeDetection = .horizontal
+        sceneView.session.run(configuration)
+        
         sceneView.autoenablesDefaultLighting = true
         sceneView.delegate = self
         
-        if modelName != nil {
-            print(modelName!)
-            downloadFiles(modelName: modelName!)
+        if modelName != nil && modelRef != nil {
+            downloadFiles(modelRef: modelRef!)
         }
     }
     
+    /*
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -49,6 +55,7 @@ class Loading3DModelsController: UIViewController, ARSCNViewDelegate {
         // Pause the view's session
         sceneView.session.pause()
     }
+    */
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
@@ -57,22 +64,22 @@ class Loading3DModelsController: UIViewController, ARSCNViewDelegate {
             let results = sceneView.hitTest(touchLocation, types: .existingPlaneUsingExtent)
             
             if let hitResult = results.first {
-                addModel(atLocation: hitResult, modelName:self.modelName!)
+                addModel(atLocation: hitResult, modelRef: self.modelRef!)
             }
         }
     }
     
-    func addModel(atLocation: ARHitTestResult, modelName: String) {
+    func addModel(atLocation: ARHitTestResult, modelRef: String) {
         let documentDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         
         if let documentDirectory = documentDirectories.first {
             
-            let fileURL = documentDirectory.appendingPathComponent("\(modelName).scn")
+            let fileURL = documentDirectory.appendingPathComponent("\(modelRef).scn")
             
             do {
                 let scene = try SCNScene(url: fileURL, options: nil)
                 
-                if let node = scene.rootNode.childNode(withName: modelName, recursively: true) {
+                if let node = scene.rootNode.childNode(withName: modelName!, recursively: true) {
                     node.position = SCNVector3(atLocation.worldTransform.columns.3.x, atLocation.worldTransform.columns.3.y, atLocation.worldTransform.columns.3.z)
                     self.sceneView.scene.rootNode.addChildNode(node)
                 }
@@ -87,12 +94,12 @@ class Loading3DModelsController: UIViewController, ARSCNViewDelegate {
         guard anchor is ARPlaneAnchor else {return}
     }
     
-    func downloadFiles(modelName: String) {
+    func downloadFiles(modelRef: String) {
         
         self.hudDisplay = MBProgressHUD.showAdded(to:self.view, animated:true)
         self.hudDisplay.label.text = "Downloading model"
         
-        let reference = Storage.storage().reference().child("scene/\(modelName)")
+        let reference = Storage.storage().reference().child("scene/\(modelRef)")
         
         reference.getData(maxSize: 10 *  1024 * 1024) { (data, error) in
             if let error = error {
@@ -103,7 +110,7 @@ class Loading3DModelsController: UIViewController, ARSCNViewDelegate {
                 let documentDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
                 
                 if let documentDirectory = documentDirectories.first {
-                    let fileURL = documentDirectory.appendingPathComponent("\(modelName).scn")
+                    let fileURL = documentDirectory.appendingPathComponent("\(modelRef).scn")
                     
                     let dataNS: NSData? = data as NSData
                     
@@ -117,6 +124,18 @@ class Loading3DModelsController: UIViewController, ARSCNViewDelegate {
                 }
             }
         }
+    }
+    
+    @IBAction func removeModel(_ sender: UIBarButtonItem) {
+        restartSession()
+    }
+    
+    func restartSession() {
+        self.sceneView.session.pause()
+        self.sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
+            node.removeFromParentNode()
+        }
+        self.sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
     }
     
 }

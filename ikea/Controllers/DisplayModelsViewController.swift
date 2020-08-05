@@ -16,6 +16,7 @@ class DisplayModelsViewController: UIViewController, UITableViewDelegate {
     let db = Firestore.firestore()
     var models: [Model] = []
     var modelName: String?
+    var modelRef: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,16 +36,19 @@ class DisplayModelsViewController: UIViewController, UITableViewDelegate {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                        if let modelName = data[K.FBase.nameField] as? String , let modelUploader = data[K.FBase.uploaderField] as? String {
+                        if let modelRef = data[K.FBase.nameField] as? String , let modelUploader = data[K.FBase.uploaderField] as? String {
                             if modelUploader == Auth.auth().currentUser?.email {
+                                let modelName = String(modelRef.split(separator: ".")[0])
                                 let newModel = Model(uploader: modelUploader, name: modelName)
                                 self.models.append(newModel)
                             }
                             
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
-                                let indexPath = IndexPath(row: self.models.count - 1, section: 0)
-                                self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+                                if self.models.count != 0 {
+                                    let indexPath = IndexPath(row: self.models.count - 1, section: 0)
+                                    self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+                                }
                             }
                         }
                     }
@@ -63,6 +67,7 @@ class DisplayModelsViewController: UIViewController, UITableViewDelegate {
             let destinationVC = segue.destination as! Loading3DModelsController
             
             destinationVC.modelName = modelName
+            destinationVC.modelRef = modelRef
         }
     }
     
@@ -88,6 +93,7 @@ extension DisplayModelsViewController: UITableViewDataSource {
         
         if let name = tableView.cellForRow(at: indexPath)?.textLabel?.text {
             modelName = name
+            modelRef = name + "." + (Auth.auth().currentUser?.email)!
         }
         
     }

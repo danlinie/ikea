@@ -17,6 +17,8 @@ class MeasurementViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var widthLabel: UILabel!
     
+    let configuration = ARWorldTrackingConfiguration()
+    
     var dotNodes = [SCNNode]()
     var textNode = SCNNode()
     
@@ -27,13 +29,14 @@ class MeasurementViewController: UIViewController, ARSCNViewDelegate {
         sceneView.delegate = self
         
         sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
+        
         
         configuration.planeDetection = .horizontal
 
@@ -50,11 +53,19 @@ class MeasurementViewController: UIViewController, ARSCNViewDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        /*
         if dotNodes.count >= 2 {
             for dot in dotNodes {
                 dot.removeFromParentNode()
             }
             dotNodes = [SCNNode]()
+        }
+        */
+        
+        if dotNodes.count >= 2 {
+            for i in (0..<(dotNodes.count - 1)) {
+                dotNodes[i].removeFromParentNode()
+            }
         }
         
         if let touchLocation = touches.first?.location(in: sceneView) {
@@ -86,8 +97,8 @@ class MeasurementViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func calculate() {
-        let start = dotNodes[0]
-        let end = dotNodes[1]
+        let start = dotNodes[dotNodes.count - 2]
+        let end = dotNodes[dotNodes.count - 1]
         
         //distance = √ ((x2-x1)^2 + (y2-y1)^2 + (z2-z1)^2
         let length = end.position.x - start.position.x
@@ -101,7 +112,7 @@ class MeasurementViewController: UIViewController, ARSCNViewDelegate {
             self.widthLabel.text = String(format: "%.2f", abs(length)) + "m"
         }
         
-        updateText(text: "\(abs(diagonal))")
+        updateText(text: String(format: "%.2f", abs(diagonal)) + "m")
     }
     
     func updateText(text: String) {
@@ -119,4 +130,15 @@ class MeasurementViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene.rootNode.addChildNode(textNode)
     }
     
+    @IBAction func resetPressed(_ sender: UIBarButtonItem) {
+        restartSession()
+    }
+    
+    func restartSession() {
+        self.sceneView.session.pause()
+        self.sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
+            node.removeFromParentNode()
+        }
+        self.sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+    }
 }

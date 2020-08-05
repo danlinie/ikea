@@ -183,7 +183,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NxT-u6-Bot"/>
                     </view>
-                    <navigationItem key="navigationItem" id="ihw-uo-McX"/>
+                    <navigationItem key="navigationItem" id="ihw-uo-McX">
+                        <barButtonItem key="rightBarButtonItem" title="Clear Model" id="077-ja-n5Y">
+                            <connections>
+                                <action selector="removeModel:" destination="uBV-ui-7DQ" id="I9i-Jr-5lh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="sceneView" destination="jdw-nR-LC1" id="eaK-Vk-VsH"/>
                     </connections>
@@ -483,7 +489,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EkG-Jd-y7B"/>
                     </view>
-                    <navigationItem key="navigationItem" id="yp3-la-OwQ"/>
+                    <navigationItem key="navigationItem" id="yp3-la-OwQ">
+                        <barButtonItem key="rightBarButtonItem" title="Reset" id="uNF-A1-Ect">
+                            <connections>
+                                <action selector="resetPressed:" destination="nue-3d-aHd" id="135-9m-Dy9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="heightLabel" destination="Nkt-0n-qed" id="wpm-OM-PjM"/>
                         <outlet property="lengthLabel" destination="6NA-WG-3dL" id="HP5-Gc-pIu"/>

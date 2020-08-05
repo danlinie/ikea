@@ -80,9 +80,10 @@ struct DocumentPicker: UIViewControllerRepresentable {
             let bucket = Storage.storage().reference()
             
             if let item = urls.first?.deletingPathExtension().lastPathComponent, let modelUploader = Auth.auth().currentUser?.email {
-                let storageReference = "scene/\(item)"
+                let modelName = "\(item).\(modelUploader)"
+                let storageReference = "scene/\(modelName)"
                 
-                db.collection(K.FBase.collectionName).addDocument(data: [K.FBase.nameField: item, K.FBase.uploaderField: modelUploader]) { (error) in
+                db.collection(K.FBase.collectionName).addDocument(data: [K.FBase.nameField: modelName, K.FBase.uploaderField: modelUploader]) { (error) in
                     if let e = error {
                         print(e.localizedDescription)
                     } else {
