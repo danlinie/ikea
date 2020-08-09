@@ -36,11 +36,10 @@ class DisplayModelsViewController: UIViewController, UITableViewDelegate {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                        if let modelRef = data[K.FBase.nameField] as? String , let modelUploader = data[K.FBase.uploaderField] as? String {
-                            if modelUploader == Auth.auth().currentUser?.email {
-                                let modelName = String(modelRef.split(separator: ".")[0])
-                                let newModel = Model(uploader: modelUploader, name: modelName)
-                                self.models.append(newModel)
+                        if let name = data[K.FBase.nameField] as? String , let uploader = data[K.FBase.uploaderField] as? String {
+                            if uploader == Auth.auth().currentUser?.email {
+                                let model = Model(uploader: uploader, name: name)
+                                self.models.append(model)
                             }
                             
                             DispatchQueue.main.async {
@@ -90,12 +89,42 @@ extension DisplayModelsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if let name = tableView.cellForRow(at: indexPath)?.textLabel?.text {
             modelName = name
-            modelRef = name + "." + (Auth.auth().currentUser?.email)!
+            modelRef = name + "-" + (Auth.auth().currentUser?.email)!
         }
-        
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            if let name = tableView.cellForRow(at: indexPath)?.textLabel?.text, let user = Auth.auth().currentUser?.email {
+                let record = "\(name)-\(user)"
+                
+                //delete the document from the firebase database
+                db.collection(K.FBase.collectionName).document(record).delete() { err in
+                    if let err = err {
+                        print("Error removing document: \(err)")
+                    } else {
+                        tableView.reloadData()
+                        print("Document successfully removed!")
+                    }
+                }
+                
+                //delete the corresponding model from the firebase storage
+                let modelRef = Storage.storage().reference().child("scene/\(record)")
+                modelRef.delete { err in
+                    if let err = err {
+                        print("Error removing document: \(err)")
+                    } else {
+                        print("Document successfully removed!")
+                    }
+                }
+            }
+        }
     }
     
 }

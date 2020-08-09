@@ -31,31 +31,12 @@ class Loading3DModelsController: UIViewController, ARSCNViewDelegate {
         sceneView.autoenablesDefaultLighting = true
         sceneView.delegate = self
         
-        if modelName != nil && modelRef != nil {
-            downloadFiles(modelRef: modelRef!)
+        if let modelRef = modelRef {
+            if !searchFile(modelRef: modelRef) {
+                downloadFiles(modelRef: modelRef)
+            }
         }
     }
-    
-    /*
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
-        
-        configuration.planeDetection = .horizontal
-
-        // Run the view's session
-        sceneView.session.run(configuration)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        // Pause the view's session
-        sceneView.session.pause()
-    }
-    */
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
@@ -136,6 +117,16 @@ class Loading3DModelsController: UIViewController, ARSCNViewDelegate {
             node.removeFromParentNode()
         }
         self.sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+    }
+    
+    func searchFile(modelRef: String) -> Bool {
+        print("searching documents")
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let url = NSURL(fileURLWithPath: path)
+        let filePath = (url.appendingPathComponent("\(modelRef).scn")?.path)!
+        print(filePath)
+        let fileManager = FileManager.default
+        return fileManager.fileExists(atPath: filePath)
     }
     
 }

@@ -16,6 +16,8 @@ struct ContentView: View {
     
     @State var show = false
     @State var alert = false
+    @State var uploadAlert = false
+    @State var duplicateAlert = false
     
     var body: some View {
         
@@ -30,11 +32,18 @@ struct ContentView: View {
         }
             
         .sheet(isPresented: $show) {
-            DocumentPicker(alert: self.$alert)
+            DocumentPicker(alert: self.$alert, uploadAlert: self.$uploadAlert, duplicateAlert: self.$duplicateAlert)
         }
        
         .alert(isPresented: $alert) {
-            Alert(title: Text("Message"), message: Text("Uploaded successfully"), dismissButton: .default(Text("Dismiss")))
+            var message: String? = nil
+            if self.uploadAlert {
+                message = "Uploaded successfully"
+            } else if self.duplicateAlert {
+                message = "Document already exists"
+            }
+            
+            return Alert(title: Text("Message"), message: Text(message!), dismissButton: .default(Text("Dismiss")))
         }
     }
     
@@ -53,6 +62,8 @@ struct DocumentPicker: UIViewControllerRepresentable {
     }
     
     @Binding var alert: Bool
+    @Binding var uploadAlert: Bool
+    @Binding var duplicateAlert: Bool
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<DocumentPicker>) -> UIDocumentPickerViewController {
         let picker = UIDocumentPickerViewController(documentTypes: [String(kUTTypeData)], in: .open)
@@ -74,35 +85,44 @@ struct DocumentPicker: UIViewControllerRepresentable {
         }
         
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-            
             let db = Firestore.firestore()
-            
             let bucket = Storage.storage().reference()
             
             if let item = urls.first?.deletingPathExtension().lastPathComponent, let modelUploader = Auth.auth().currentUser?.email {
-                let modelName = "\(item).\(modelUploader)"
+                let modelName = "\(item)-\(modelUploader)"
                 let storageReference = "scene/\(modelName)"
                 
-                db.collection(K.FBase.collectionName).addDocument(data: [K.FBase.nameField: modelName, K.FBase.uploaderField: modelUploader]) { (error) in
-                    if let e = error {
-                        print(e.localizedDescription)
-                    } else {
-                        print("Successfully saved data")
-                    }
-                }
+                //check if the model already exists in firebase firestore
+                let docReference = db.collection(K.FBase.collectionName).document(modelName)
                 
-                bucket.child(storageReference).putFile(from: urls.first!, metadata: nil) { (_, err) in
-                    if let e = err {
-                        print(e.localizedDescription)
-                        return
+                docReference.getDocument { (document, error) in
+                    if let document = document {
+                        if document.exists {
+                            self.parent.alert.toggle()
+                            self.parent.duplicateAlert.toggle()
+                        } else {
+                            docReference.setData([K.FBase.nameField: item, K.FBase.uploaderField: modelUploader]) { (err) in
+                                if let e = err {
+                                    print(e.localizedDescription)
+                                } else {
+                                    print("Successfully saved data")
+                                }
+                            }
+                            
+                            bucket.child(storageReference).putFile(from: urls.first!, metadata: nil) { (_, err) in
+                                if let e = err {
+                                    print(e.localizedDescription)
+                                    return
+                                }
+                                
+                                print("success")
+                                self.parent.alert.toggle()
+                                self.parent.uploadAlert.toggle()
+                            }
+                        }
                     }
-                    
-                    print("success")
-                    self.parent.alert.toggle()
                 }
             }
-            
         }
-        
     }
 }
