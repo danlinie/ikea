@@ -20,6 +20,7 @@
 		6058257B24D6132600EA7816 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058257A24D6132600EA7816 /* Constants.swift */; };
 		6058257D24D61B2700EA7816 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058257C24D61B2700EA7816 /* RegisterViewController.swift */; };
 		6058257F24D6324B00EA7816 /* DisplayModelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058257E24D6324B00EA7816 /* DisplayModelsViewController.swift */; };
+		605F83E924E2E8AD00D5B90C /* Poly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605F83E824E2E8AD00D5B90C /* Poly.swift */; };
 		60630F5724CAF28E0034385D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 60630F5524CAF28D0034385D /* MBProgressHUD.m */; };
 		60630F5924CB10E80034385D /* Loading3DModelsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60630F5824CB10E80034385D /* Loading3DModelsController.swift */; };
 		60630F5B24CB2B500034385D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 60630F5A24CB2B4F0034385D /* GoogleService-Info.plist */; };
@@ -47,6 +48,7 @@
 		6058257A24D6132600EA7816 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		6058257C24D61B2700EA7816 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		6058257E24D6324B00EA7816 /* DisplayModelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModelsViewController.swift; sourceTree = "<group>"; };
+		605F83E824E2E8AD00D5B90C /* Poly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Poly.swift; sourceTree = "<group>"; };
 		60630F5424CAF2880034385D /* ikea-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ikea-Bridging-Header.h"; sourceTree = "<group>"; };
 		60630F5524CAF28D0034385D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		60630F5624CAF28E0034385D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				6058257824D611F700EA7816 /* LoginViewController.swift */,
 				6058257C24D61B2700EA7816 /* RegisterViewController.swift */,
 				6058257E24D6324B00EA7816 /* DisplayModelsViewController.swift */,
+				605F83E824E2E8AD00D5B90C /* Poly.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				60CC7AB524A9D85B0058B200 /* MeasurementViewController.swift in Sources */,
 				60630F6324CCDE080034385D /* HomeViewController.swift in Sources */,
 				6058257B24D6132600EA7816 /* Constants.swift in Sources */,
+				605F83E924E2E8AD00D5B90C /* Poly.swift in Sources */,
 				60630F5924CB10E80034385D /* Loading3DModelsController.swift in Sources */,
 				6058257D24D61B2700EA7816 /* RegisterViewController.swift in Sources */,
 				600B3C9D248EF73E00CEB217 /* ViewController.swift in Sources */,

@@ -1,50 +1,48 @@
 //
-//  ViewController.swift
+//  Poly.swift
 //  ikea
 //
-//  Created by Danlin Wang on 08/06/2020.
+//  Created by Danlin Wang on 11/08/2020.
 //  Copyright © 2020 Danlin Wang. All rights reserved.
 //
 
 import UIKit
 import ARKit
 import SceneKit
+import Firebase
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, ARSCNViewDelegate {
+class Poly: UIViewController, ARSCNViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     var hudDisplay: MBProgressHUD!
     
-    let itemsArray: [String] = ["cup", "vase", "boxing", "table"]
+    
     @IBOutlet weak var sceneView: ARSCNView!
-    @IBOutlet weak var itemsCollectionView: UICollectionView!
+    @IBOutlet weak var tableView: UITableView!
     let configuration = ARWorldTrackingConfiguration()
     
+    var itemsArray: [String] = []
     var selectedItem: String?
     var localTranslationPosition: CGPoint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.hudDisplay = MBProgressHUD.showAdded(to: self.sceneView, animated: true)
-        self.hudDisplay.label.text = "Detecting Plane..."
-
-        self.itemsCollectionView.dataSource = self
-        self.itemsCollectionView.delegate = self
+        self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         self.sceneView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
         
         self.registerGestureRecognizers()
         self.sceneView.autoenablesDefaultLighting = true
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        
+        listAllModels()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         configuration.planeDetection = .horizontal
-
+        
         sceneView.session.run(configuration)
     }
     
@@ -59,18 +57,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinch))
-        //let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(rotate))
-        //longPressGestureRecognizer.minimumPressDuration = 0.1
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panned))
         self.sceneView.addGestureRecognizer(panGestureRecognizer)
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(move))
         self.sceneView.addGestureRecognizer(longPressGestureRecognizer)
         
-        //self.sceneView.addGestureRecognizer(longPressGestureRecognizer)
         self.sceneView.addGestureRecognizer(pinchGestureRecognizer)
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
+    
     
     @objc func panned(sender: UIPanGestureRecognizer) {
         if sender.state == .changed {
@@ -106,6 +102,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
+    
     @objc func tapped(sender: UITapGestureRecognizer) {
         let sceneView = sender.view as! ARSCNView
         let tapLocation = sender.location(in: sceneView)
@@ -132,28 +129,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard anchor is ARPlaneAnchor else {return}
-        
-        DispatchQueue.main.async {
-            self.hudDisplay.label.text = "Plane Detected"
-            self.hudDisplay.hide(animated: true, afterDelay: 1.0)
-        }
-    }
-    
-    @objc func rotate(sender: UILongPressGestureRecognizer) {
-        let sceneView = sender.view as! ARSCNView
-        let holdLocation = sender.location(in: sceneView)
-        let hitTest = sceneView.hitTest(holdLocation)
-        if !hitTest.isEmpty {
-            
-            let result = hitTest.first!
-            if sender.state == .began {
-                let rotation = SCNAction.rotateBy(x: 0, y: CGFloat(360.degreesToRadians), z: 0, duration: 1)
-                let forever = SCNAction.repeatForever(rotation)
-                result.node.runAction(forever)
-            } else if sender.state == .ended {
-                result.node.removeAllActions()
-            }
-        }
     }
     
     func centerPivot(for node: SCNNode) {
@@ -166,40 +141,103 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         )
     }
     
-    func addItem(hitTestResult: ARHitTestResult) {
-        if let selectedItem = self.selectedItem {
-            let scene = SCNScene(named: "Assets/\(selectedItem).scn")
-            let node = (scene?.rootNode.childNode(withName: selectedItem, recursively: false))!
-            let transform = hitTestResult.worldTransform
-            let thirdColumn = transform.columns.3
-            node.position = SCNVector3(thirdColumn.x, thirdColumn.y, thirdColumn.z)
-            if selectedItem == "table" {
-                self.centerPivot(for: node)
+    func listAllModels() {
+            print("List all models")
+            let storageReference = Storage.storage().reference().child("admin")
+            storageReference.listAll { (result, err) in
+                if let err = err {
+                    print(err.localizedDescription)
+                }
+                
+                for item in result.items {
+                    let name = item.name.split(separator: ".")[0]
+                    self.itemsArray.append(String(name))
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
-            self.sceneView.scene.rootNode.addChildNode(node)
         }
-    }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        func addItem(hitTestResult: ARHitTestResult) {
+            if let selectedItem = self.selectedItem {
+                
+                downloadFile(item: selectedItem)
+                
+                let documentDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                
+                if let documentDirectory = documentDirectories.first {
+                    let fileURL = documentDirectory.appendingPathComponent("\(selectedItem).scn")
+                    
+                    do {
+                        let scene = try SCNScene(url: fileURL, options: nil)
+                        let node = (scene.rootNode.childNode(withName: selectedItem, recursively: false))!
+                        let transform = hitTestResult.worldTransform
+                        let thirdColumn = transform.columns.3
+                        node.position = SCNVector3(thirdColumn.x, thirdColumn.y, thirdColumn.z)
+                        if selectedItem == "table" {
+                            self.centerPivot(for: node)
+                        }
+                        self.sceneView.scene.rootNode.addChildNode(node)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemsArray.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "item", for: indexPath) as! itemCell
-        cell.itemLabel.text = self.itemsArray[indexPath.row]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath)
+        cell.textLabel?.text = itemsArray[indexPath.row]
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.contentView.backgroundColor = UIColor.green
-        self.selectedItem = itemsArray[indexPath.row]
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let name = tableView.cellForRow(at: indexPath)?.textLabel?.text {
+            selectedItem = name
+        }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.contentView.backgroundColor = UIColor.orange
+    func downloadFile(item: String) {
+        
+        let reference = Storage.storage().reference().child("admin/\(item).scn")
+        
+        reference.getData(maxSize: 10 *  1024 * 1024) { (data, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            if let data = data {
+                let documentDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                
+                if let documentDirectory = documentDirectories.first {
+                    let fileURL = documentDirectory.appendingPathComponent("\(item).scn")
+                    
+                    if !FileManager.default.fileExists(atPath: fileURL.path) {
+                        self.hudDisplay = MBProgressHUD.showAdded(to: self.view, animated: true)
+                        self.hudDisplay.label.text = "Downloading model"
+                        
+                        let dataNS: NSData? = data as NSData
+                        
+                        try! dataNS?.write(to: fileURL, options: .atomic)
+                        
+                        DispatchQueue.main.async {
+                            self.hudDisplay.hide(animated: true, afterDelay: 1.0)
+                        }
+                        
+                        print("Firebase File Saved")
+                    }
+                        
+                }
+            }
+        }
     }
+    
     
     @IBAction func resetPressed(_ sender: UIBarButtonItem) {
         restartSession()
@@ -212,8 +250,4 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
         self.sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
     }
-}
-
-extension Int {
-    var degreesToRadians: Double {return Double(self) * .pi/180}
 }
