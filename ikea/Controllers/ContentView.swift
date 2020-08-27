@@ -19,6 +19,8 @@ struct ContentView: View {
     @State var uploadAlert = false
     @State var duplicateAlert = false
     
+    @State var fileName = ""
+    
     var body: some View {
         
         Button(action: {
@@ -32,7 +34,7 @@ struct ContentView: View {
         }
             
         .sheet(isPresented: $show) {
-            DocumentPicker(alert: self.$alert, uploadAlert: self.$uploadAlert, duplicateAlert: self.$duplicateAlert)
+            DocumentPicker(alert: self.$alert, uploadAlert: self.$uploadAlert, duplicateAlert: self.$duplicateAlert, fileName: self.$fileName)
         }
        
         .alert(isPresented: $alert) {
@@ -40,7 +42,7 @@ struct ContentView: View {
             if self.uploadAlert {
                 message = "Uploaded successfully"
             } else if self.duplicateAlert {
-                message = "Document already exists"
+                message = "There is already a file named \(fileName).scn in the database. Delete the file from Browse Catalogue first or rename the file, and upload it again."
             }
             
             return Alert(title: Text("Message"), message: Text(message!), dismissButton: .default(Text("Dismiss")))
@@ -64,6 +66,8 @@ struct DocumentPicker: UIViewControllerRepresentable {
     @Binding var alert: Bool
     @Binding var uploadAlert: Bool
     @Binding var duplicateAlert: Bool
+    
+    @Binding var fileName: String
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<DocumentPicker>) -> UIDocumentPickerViewController {
         let picker = UIDocumentPickerViewController(documentTypes: [String(kUTTypeData)], in: .open)
@@ -89,6 +93,9 @@ struct DocumentPicker: UIViewControllerRepresentable {
             let bucket = Storage.storage().reference()
             
             if let item = urls.first?.deletingPathExtension().lastPathComponent, let modelUploader = Auth.auth().currentUser?.email {
+                
+                self.parent.fileName = item
+                
                 let modelName = "\(item)-\(modelUploader)"
                 let storageReference = "scene/\(modelName)"
                 

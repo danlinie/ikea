@@ -123,6 +123,19 @@ extension DisplayModelsViewController: UITableViewDataSource {
                         print("Document successfully removed!")
                     }
                 }
+                
+                //delete the corresponding model from the device, i.e. local file management
+                let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+                let url = NSURL(fileURLWithPath: path)
+                if let filePath = (url.appendingPathComponent("\(record).scn")?.path) {
+                    let fileManager = FileManager.default
+                    do {
+                        try fileManager.removeItem(atPath: filePath)
+                        print("Document successfully removed!")
+                    } catch {
+                        print("Error in deleting the model")
+                    }
+                }
             }
         }
     }
