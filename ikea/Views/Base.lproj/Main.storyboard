@@ -104,7 +104,7 @@
             </objects>
             <point key="canvasLocation" x="37.600000000000001" y="99.400299850074973"/>
         </scene>
-        <!--View Controller-->
+        <!--PlayGround-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ikea" customModuleProvider="target" sceneMemberID="viewController">
@@ -167,7 +167,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Qts-oN-t3f">
+                    <navigationItem key="navigationItem" title="PlayGround" id="Qts-oN-t3f">
                         <barButtonItem key="rightBarButtonItem" title="Reset" id="7Du-ge-NiH">
                             <connections>
                                 <action selector="resetPressed:" destination="BYZ-38-t0r" id="lyF-rh-6ID"/>
@@ -205,7 +205,7 @@
                         <viewLayoutGuide key="safeArea" id="NxT-u6-Bot"/>
                     </view>
                     <navigationItem key="navigationItem" id="ihw-uo-McX">
-                        <barButtonItem key="rightBarButtonItem" title="Clear Model" id="077-ja-n5Y">
+                        <barButtonItem key="rightBarButtonItem" title="Reset" id="077-ja-n5Y">
                             <connections>
                                 <action selector="removeModel:" destination="uBV-ui-7DQ" id="I9i-Jr-5lh"/>
                             </connections>
@@ -251,7 +251,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2B1-xl-cha"/>
                     </view>
-                    <navigationItem key="navigationItem" id="ckg-SY-oM8">
+                    <navigationItem key="navigationItem" title="Make Your Own" id="ckg-SY-oM8">
                         <barButtonItem key="rightBarButtonItem" title="Render" id="RYF-ut-w1R">
                             <connections>
                                 <segue destination="uBV-ui-7DQ" kind="show" identifier="renderModel" id="rIX-0B-pmb"/>
@@ -355,7 +355,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="StW-ju-Pya"/>
                     </view>
-                    <navigationItem key="navigationItem" id="wcn-lc-f77">
+                    <navigationItem key="navigationItem" title="Poly" id="wcn-lc-f77">
                         <barButtonItem key="rightBarButtonItem" title="Reset" id="0uT-62-5ST">
                             <connections>
                                 <action selector="resetPressed:" destination="pSW-tG-SKX" id="G3v-3Y-YA3"/>
@@ -447,7 +447,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bPR-bc-tRX"/>
                     </view>
-                    <navigationItem key="navigationItem" id="A6p-L3-mEG"/>
+                    <navigationItem key="navigationItem" title="Login" id="A6p-L3-mEG"/>
                     <connections>
                         <outlet property="emailTextField" destination="TfM-nj-RRe" id="KAn-NV-vd0"/>
                         <outlet property="passwordTextField" destination="1Rs-6i-KNf" id="2zg-vd-een"/>
@@ -458,7 +458,7 @@
             </objects>
             <point key="canvasLocation" x="570" y="937"/>
         </scene>
-        <!--Register View Controller-->
+        <!--Register-->
         <scene sceneID="u5E-Xi-rC2">
             <objects>
                 <viewController id="c7d-6Y-JHI" customClass="RegisterViewController" customModule="ikea" customModuleProvider="target" sceneMemberID="viewController">
@@ -519,7 +519,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="n4K-py-oCR"/>
                     </view>
-                    <navigationItem key="navigationItem" id="x8d-Mc-iNp"/>
+                    <navigationItem key="navigationItem" title="Register" id="x8d-Mc-iNp"/>
                     <connections>
                         <outlet property="emailTextField" destination="LP8-79-1rT" id="hSV-BL-BXg"/>
                         <outlet property="passwordTextField" destination="wvA-EB-G7T" id="2wc-ai-1Jd"/>
@@ -584,7 +584,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EkG-Jd-y7B"/>
                     </view>
-                    <navigationItem key="navigationItem" id="yp3-la-OwQ">
+                    <navigationItem key="navigationItem" title="AR Measure" id="yp3-la-OwQ">
                         <barButtonItem key="rightBarButtonItem" title="Reset" id="uNF-A1-Ect">
                             <connections>
                                 <action selector="resetPressed:" destination="nue-3d-aHd" id="135-9m-Dy9"/>

@@ -46,6 +46,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         configuration.planeDetection = .horizontal
 
         sceneView.session.run(configuration)
+        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
     }
     
     override func viewWillDisappear(_ animated: Bool) {

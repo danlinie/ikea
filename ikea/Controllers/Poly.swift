@@ -48,6 +48,8 @@ class Poly: UIViewController, ARSCNViewDelegate, UITableViewDataSource, UITableV
         configuration.planeDetection = .horizontal
         
         sceneView.session.run(configuration)
+        
+        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -232,6 +234,7 @@ class Poly: UIViewController, ARSCNViewDelegate, UITableViewDataSource, UITableV
                             print("File exists")
                             if let lastModificationDate = self.getFileModificationDate(fileURL: fileURL.path) {
                                 let creationDate = self.convertDateFormate(date: lastModificationDate)
+                                print(creationDate)
                                 
                                 if let updateDate = self.itemsArray[item] {
                                     let result = self.compareDates(creationDate: creationDate, lastUpdateDate: updateDate)
